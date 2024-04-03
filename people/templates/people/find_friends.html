@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Поиск друзей{% endblock %}
+
+{% block content %}
+    <div id="find-friend-block">
+        <form method="get">
+            {% if query %}
+                <input type="text" name="query" placeholder="Найти друга" value="{{ query }}">
+            {% else %}
+                <input type="text" name="query" placeholder="Найти друга">
+            {% endif %}
+            {% csrf_token %}
+        </form>
+    </div>
+
+    {% if query %}
+        <p>Результат по поиску: {{query}}</p>
+        <div class="users-cards-container">
+            {% for user in users %}
+                <div class="profile-container list">
+                    <a href="{{ user.profile.get_absolute_url }}">
+                        <img class="round" src="{{ request.scheme }}://{{ request.get_host }}{{ user.profile.photo.url }}" width="120" alt="user" />
+                    </a>
+                    <div class="user-info">
+                        <h3>{{ user.username }}, {{user.profile.age}}</h3>
+                        <div class="rate">
+                            {% with ''|center:user.profile.get_rounded_rating as range %}
+                                {% for _ in range %}
+                                    <label for="star{{ forloop.counter }}-{{ user.pk }}">★</label>
+                                {% endfor %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Пользователи не найдены</p>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="users-cards-container">
+            {% for user in users %}
+                <div class="profile-container list">
+                    <a href="{{ user.profile.get_absolute_url }}">
+                        <img class="round" src="{{ request.scheme }}://{{ request.get_host }}{{ user.profile.photo.url }}" width="120" alt="user" />
+                    </a>
+                    <div class="user-info">
+                        <h3>{{ user.username }}, {{user.profile.age}}</h3>
+                        <div class="rate">
+                            {% with ''|center:user.profile.get_rounded_rating as range %}
+                                {% for _ in range %}
+                                    <label for="star{{ forloop.counter }}-{{ user.pk }}">★</label>
+                                {% endfor %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,900 @@
+@font-face {
+    font-family: 'Montserrat-Italic';
+    src: url('/static/fonts/Montserrat-Italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'AKONY';
+    src: url('/static/fonts/AKONY.otf') format('truetype');
+}
+
+
+f1285a
+* {
+    box-sizing: border-box;
+    font-family: 'Montserrat-Italic', Arial, sans-serif; 
+}   
+
+:root {
+    --sidebar-width: 300px; /* Ширина сайдбара */
+    --footer-chat-height: 60px;
+    --additional-color: rgb(0, 65, 194);
+}
+/* 008000 */
+/* ae043d */
+/* ff0037 */
+/* var(--additional-color) */
+
+body {
+    background-color: #141414;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    font-family: 'Montserrat-Italic', Arial, sans-serif; 
+}
+
+h1 {
+    color: #fff;
+}
+
+a.custom {
+    color: #fff;
+    text-decoration: none; /* Убираем подчеркивание */
+    font-family: 'Montserrat-Italic', Arial, sans-serif; /* Устанавливаем другой шрифт */
+    font-size: 18px; /* Устанавливаем размер шрифта */
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat-Italic', Arial, sans-serif; 
+}
+
+/* ================СКРОЛЛ============ */
+::-webkit-scrollbar {
+    width: 6px;               /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #141414;        /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--additional-color);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+}
+/* ================СКРОЛЛ============ */
+
+#header a,
+.site-name {
+    font-size: 30px;
+    text-decoration: none;
+    display: inline-block;   
+}
+
+#header .site-name {
+    font-family: 'AKONY', Arial, sans-serif;
+    float: left;
+    color: #fff;
+    margin-top: 15px;
+}
+
+#header {
+    background-color: #1d1d1d;
+    padding: 10px 0; /* Уменьшаем padding-top для поднятия содержимого вверх */
+    text-align: center;
+    border-bottom: 4px solid var(--additional-color);
+    overflow: hidden; /* Используем overflow для предотвращения выхода за границы */
+    height: 60px;
+}
+
+#header a {
+    font-family: 'the_weekend', Arial, sans-serif;
+    color: #fff;
+    /* margin: 0 10px; */
+    text-decoration: none;
+    display: inline-block;
+    
+}
+
+.header-links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 7px;
+    margin-right: 40px;
+}
+
+.header-links a {
+    margin-left: 40px; /* Расстояние между ссылками */
+}
+
+.header-links img.profile-photo {
+    margin-left: 0px; /* Расстояние между изображением и ссылками */
+    border-radius: 50%;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+}
+
+/* ============================ФОРМА=============================== */
+
+.form-header {
+    text-align: center; /* Выравниваем текст по центру */
+    margin-top: 0px; /* Добавляем отступ сверху */
+    font-size: 42px;
+}
+
+#form-block {
+    width: 25%;
+    margin: 20px auto; /* Добавлен отступ сверху и снизу */
+    padding: 20px; /* Добавлен внутренний отступ вокруг содержимого блока */
+    border-radius: 8px; /* Закругляем углы блока */
+    background-color: #1d1d1d; /* Цвет фона блока */
+}
+
+/* Стили для формы внутри registration-block */
+#form-block form {
+    display: flex;
+    flex-direction: column;
+}
+
+#form-block form input {
+    margin-bottom: 20px; /* Увеличен отступ между полями */
+    color: #fff; /* Цвет текста поля */
+    background-color: #141414; /* Цвет фона поля */
+    border: 1px solid #141414; /* Граница поля */
+    border-radius: 8px; /* Закругляем углы поля */
+    padding: 10px; /* Внутренний отступ вокруг текста в поле */
+}
+
+#form-block form input[type="submit"] {
+    background-color: var(--additional-color);
+    color: #fff;
+    padding: 10px 15px;
+    margin: 0px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat-Italic', Arial, sans-serif; 
+}
+
+#form-block form input::placeholder {
+    color: #888; /* Цвет подсказки для заполнения */
+}
+
+#form-block form input:hover::placeholder,
+#form-block form input:focus::placeholder {
+    color: #fff; /* Цвет подсказки для заполнения при наведении и фокусе */
+}
+
+#form-block form p {
+    margin: 10px 0; /* Отступ между параграфами (элементами формы) */
+}
+
+#form-block a {
+    display: block; /* Делаем ссылки блочными элементами */
+    text-align: center; /* Выравниваем текст по центру */
+    margin-top: 10px; /* Добавляем отступ сверху */
+    color: var(--additional-color); /* Цвет ссылок */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+#form-block a:hover {
+    text-decoration: underline; /* Добавляем подчеркивание при наведении */
+}
+
+/* ============================================================ */
+
+.p-center{
+    text-align: center;
+}
+
+#find-friend-block {
+    width: 45%;
+    margin: 20px auto; /* Добавлен отступ сверху и снизу */
+    padding: 20px; /* Добавлен внутренний отступ вокруг содержимого блока */
+    border-radius: 8px; /* Закругляем углы блока */
+}
+
+/* Стили для формы внутри find-friend-block */
+#find-friend-block form {
+    display: flex;
+    flex-direction: column;
+}
+
+#find-friend-block form input {
+    margin-bottom: 20px;
+    background-color: #1d1d1d;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 0 5px var(--additional-color); /* Добавление тени */
+    border: 1px solid #1d1d1d; /* Установка цвета границы черным */
+    color: #fff; /* Цвет текста поля */
+    font-family: 'Montserrat-Italic', Arial, sans-serif; 
+}
+
+#find-friend-block form input[type="submit"] {
+    background-color: var(--additional-color);
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+#find-friend-block form input::placeholder {
+    color: #888; /* Цвет подсказки для заполнения */
+}
+
+#find-friend-block form input:hover::placeholder,
+#find-friend-block form input:focus::placeholder {
+    color: #fff; /* Цвет подсказки для заполнения при наведении и фокусе */
+}
+
+#find-friend-block form p {
+    margin: 10px 0; /* Отступ между параграфами (элементами формы) */
+}
+
+.errors {
+    color: #ff0000;  /* Красный цвет текста */
+    margin-bottom: 10px;  /* Отступ снизу */
+}
+
+.errors ul {
+    list-style-type: none;  /* Убираем маркеры списка */
+    padding: 0;  /* Убираем внутренний отступ у списка */
+}
+
+.errors ul li {
+    margin-bottom: 5px;  /* Отступ между элементами списка */
+}
+
+.errors ul li ul {
+    margin-top: 5px;  /* Отступ сверху для вложенного списка */
+}
+
+h3 {
+    margin: 10px auto;
+    font-size: 30px;
+}
+
+h5 {
+    font-size: 20px;
+    margin: 10px auto;
+}
+
+h6 {
+    margin: 5px auto;
+    text-transform: uppercase;
+}
+
+/* =============================БЛОК ПРОФИЛЯ=========================== */
+
+.profile-head-container {
+    width: 640px;
+    margin: 0 auto;
+    padding-top: 10px;
+    display: flex;
+}
+
+.profile-buttons-container {
+    left: 2%;
+    width: 350px;
+    position: relative;
+    background-color: transparent;
+    color: #B3B8CD;
+    max-width: 100%;
+    text-align: center;
+    display: flex;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.profile-buttons-container .group a {
+    color: #141414;
+    text-decoration: none; /* Убираем подчеркивание */
+    font-family: 'Montserrat-Italic', Arial, sans-serif; /* Устанавливаем другой шрифт */
+    font-size: 18px; /* Устанавливаем размер шрифта */
+}
+
+.profile-buttons-container .group.ghost a {
+    color: var(--additional-color); /* Устанавливаем цвет текста ссылок */
+}
+
+
+button.group {
+    position: relative;
+    width: 40%;
+    height: 50%;
+    /* Цвет фона */
+    background-color: var(--additional-color);
+    /* Граница */
+    border: 1px solid var(--additional-color);
+    /* Радиус скругления */
+    border-radius: 3px;
+    /* Цвет текста */
+    color: #141414;
+    /* Шрифт */
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    /* Внутренние отступы */
+    padding: 10px 1px;
+    margin: 10px;
+}
+
+button.group.down {
+    bottom: 10%;
+}
+
+
+button.group.ghost {
+    height: 40%;
+    /* Прозрачный фон */
+    background-color: transparent;
+    /* Цвет текста */
+    color: var(--additional-color);
+}
+
+
+/* Стили для контейнера карточки профиля */
+.profile-container {
+    position: relative;
+    background-color: #1d1d1d;
+    border-radius: 8px;
+    box-shadow: 0px 10px 20px -10px rgba(0,0,0,0.75);
+    color: #B3B8CD;
+    padding-top: 10px;
+    width: 350px;
+    max-width: 100%;
+    text-align: center;
+    flex-direction: column; /* Изменяем направление на вертикальное */
+    justify-content: center; /* Центрируем содержимое по вертикали */
+    align-items: center; /* Центрируем содержимое по горизонтали */
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Стили для круглой картинки */
+.profile-container .round {
+    /* Граница картинки */
+    border: 1px solid var(--additional-color);
+    /* Радиус скругления */
+    border-radius: 50%;
+    /* Внутренние отступы */
+    padding: 7px;
+    overflow: hidden;
+    width: 132px;
+    height: 132px;
+}
+
+.buttoms-profile-block {
+    display: flex;
+    margin: 0 auto;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Стили для кнопки primary */
+button.primary {
+    /* Цвет фона */
+    background-color: var(--additional-color);
+    /* Граница */
+    border: 1px solid var(--additional-color);
+    /* Радиус скругления */
+    border-radius: 3px;
+    /* Цвет текста */
+    color: #141414;
+    /* Шрифт */
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    /* Внутренние отступы */
+    padding: 10px 15px;
+    margin: 5px;
+    font-family: 'Montserrat-Italic', Arial, sans-serif; 
+}
+
+/* Стили для кнопки primary в режиме ghost */
+button.primary.ghost {
+    /* Прозрачный фон */
+    background-color: transparent;
+    /* Цвет текста */
+    color: var(--additional-color);
+}
+
+.other-user-right-container {
+    height: 100%;
+    width: 40%;
+    margin: 0 auto; /* Центрирование контейнера на странице */
+    border-radius: 8px;
+    justify-content: center;
+    box-shadow: 0px 10px 20px -10px rgba(0,0,0,0.75);
+    background-color: transparent;
+    align-items: center;
+    position: relative;
+}
+
+.user-profile-game-list {
+    background-color: #1d1d1d;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+h5.user-profile-game-list-title {
+    font-size: 15px;
+}
+
+@import "https://unpkg.com/open-props";
+@import "https://unpkg.com/open-props/normalize.min.css";
+
+
+
+.media-scroller {
+  --_spacer: var(--size-3);
+  display: grid;
+  gap: var(--_spacer);
+  grid-auto-flow: column;
+  grid-auto-columns: 43%;
+
+  padding: 0 var(--_spacer) var(--_spacer);
+
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  /* max-width: 40%; */
+  max-height: 130px;
+}
+
+.media-scroller--with-groups {
+  grid-auto-columns: 80%;
+}
+
+.media-group {
+  display: grid;
+  gap: var(--_spacer);
+  grid-auto-flow: column;
+}
+
+.media-element {
+    display: grid;
+    grid-template-rows: min-content;
+    gap: var(--_spacer);
+    padding: var(--_spacer);
+    background: var(--surface-2);
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-2);
+    height: auto;
+    width: 100%;
+}
+
+.media-element > img {
+    width: 100px; /* Ширина изображения занимает 100% ширины родительского блока */
+    height: auto; /* Автоматическая высота для сохранения соотношения сторон */
+    object-fit: cover;
+}
+
+.snaps-inline {
+  scroll-snap-type: inline mandatory;
+  scroll-padding-inline: var(--_spacer, 1rem);
+}
+
+.snaps-inline > * {
+  scroll-snap-align: start;
+}
+
+.round-game-img {
+    border-radius: 50%;
+    padding: 7px;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+}
+
+.media-scroller::-webkit-scrollbar {
+    height: 6px; 
+}
+
+.media-scroller::-webkit-scrollbar-track {
+    background-color: #141414; /* Цвет области прокрутки */
+}
+
+.media-scroller::-webkit-scrollbar-thumb {
+    background-color: var(--additional-color);    /* Цвет ползунка скроллбара */
+    border-radius: 20px;       /* Закругление краев ползунка */
+}
+
+/* =============================РЕЙТИНГ=========================== */
+
+.rating-contatiner {
+    margin-top: 20px;
+    position: relative;
+    border-radius: 8px;
+    background-color: #1d1d1d;
+    width: 100%;
+    align-items: center;
+    top: 100%; 
+}
+
+h5.rate-title {
+    font-size: 15px;
+    text-align: center;
+}
+
+.rate {
+    width: 100%;
+    height: 46px;
+    display: flex; /* Добавляем flex-контейнер */
+    justify-content: center; /* Выравниваем дочерние элементы по центру по горизонтали */
+    flex-direction: row-reverse;
+}
+
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+
+
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+
+
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+
+
+.rate > input:checked ~ label {
+    color: var(--additional-color);    
+}
+
+
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: var(--additional-color);  
+}
+
+
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color:var(--additional-color);
+}
+
+
+
+.block-button-friends {
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: transparent;
+    width: 100%;
+    align-items: center;
+    display: flex; /* добавлено свойство для отображения элементов внутри блока в виде flex-контейнера */
+    justify-content: center; /* выравнивание по центру по горизонтали */
+}
+
+
+
+
+/* =============================РЕЙТИНГ=========================== */
+
+
+/* =============================БЛОК ПРОФИЛЯ=========================== */
+
+.add-post-buttom {
+    background-color:#1d1d1d;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%; /* Ширина кнопки равна 100% ширине родительского блока */
+    margin: 5px auto; /* Центрируем кнопку по вертикали и горизонтали */
+    box-sizing: border-box; /* Включаем ширину и высоту кнопки внутри ее границ и отступов */
+    color: white;
+    box-shadow: 0px 10px 20px -10px rgba(0,0,0,0.75);
+}
+
+.blog-content {
+    border-radius: 8px;
+    width: 640px; /* Ширина блока контента */
+    margin: 0 auto; /* Автоматически выравниваем по центру */
+    display: flex;
+    flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+    justify-content: space-between;
+    box-shadow: 0px 10px 20px -10px rgba(0,0,0,0.75);
+    padding-top: 15px;
+}
+
+/* Стили для отдельного поста */
+.blog-post {
+    width: 100%; /* Ширина каждого поста */
+    margin: 0 auto; /* Автоматическое выравнивание по центру */
+    margin-bottom: 20px; /* Отступ между постами */
+    padding: 10px; /* Внутренний отступ вокруг содержимого поста */
+    border-radius: 8px; /* Закругление углов поста */
+    background-color: #1d1d1d;
+}
+
+
+.post-user-info {
+    display: inline-block;
+    position: relative;
+    margin: 0 left;
+}
+
+img.post-user-img {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+}
+
+.post-text-info {
+    position: absolute;
+    left: 55px;
+    top: 0px;
+    max-width: 350px;
+}
+
+h5.post-user-username {
+    font-size: 20px;
+    padding: 0px;
+    margin: 0;
+}
+
+p.post-date {
+    padding: 0px;
+    font-size: 12px;
+    margin: 0;
+    white-space: nowrap;
+}
+
+
+/* Стили для текста поста */
+.block-post p {
+    font-size: 16px; /* Размер шрифта текста поста */
+    line-height: 1.6; /* Междустрочный интервал */
+    margin-bottom: 10px; /* Отступ снизу текста */
+}
+
+
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border-color: black;
+    background-color: #141414;
+    font-size: 16px;
+    color: white;
+    resize: none;
+    margin-bottom: 5px;
+    overflow-y: scroll;
+}
+
+textarea::-webkit-scrollbar {
+    width: 6px;  /* Ширина всего скроллбара */
+}
+
+textarea::-webkit-scrollbar-track {
+    background-color: #141414; /* Цвет области прокрутки */
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: var(--additional-color);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+}
+
+
+.blog-photo {
+    display: block; /* Устанавливаем изображение как блочный элемент */
+    max-width: 100%; /* Максимальная ширина изображения */
+    border-radius: 8px; /* Закругление углов изображения */
+    margin: 0 auto; /* Автоматически выравниваем по центру по горизонтали */
+    width: 400px;
+}
+
+/* =========================ИГРЫ====================== */
+.game-card-container{
+    max-width: 750px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items:stretch;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    margin-bottom: 150px;
+}
+
+.game-card{
+    background-color:#141414;
+    border-radius: 8px;
+    box-shadow: 0px 0px px rgba(0, 0, 0, 0.1);
+    font-size: large;
+    margin: 20px;
+    padding: 15px;
+    width: 150px;
+    height: 220px;
+    text-align: center;
+}
+
+
+.game-card img {
+    width: 120px;
+    height: auto; 
+    object-fit: contain;
+    overflow: hidden;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.game-card img:hover {
+    transform: scale(1.2); /* Увеличиваем размер изображения при наведении на него */
+}
+
+.selected {
+    border-radius: 50%;
+    box-shadow: 0 0 10px 5px var(--additional-color); /* Эффект свечения */
+}
+
+/* =========================ИГРЫ====================== */
+
+.profile-container.list {
+    margin: 20px; /* Отступ между карточками */
+    padding: 20px; /* Добавляем внутренний отступ внутри каждой карточки */
+}
+
+.users-cards-container {
+    width: 60%;
+    margin: 0px auto;
+    border-radius: 8px;
+    box-shadow: 0px 5px 5px 5px rgba(15, 15, 15, 0.75);
+    display: flex;
+    flex-wrap: wrap; /* Это позволит элементам переноситься на новую строку при нехватке места */
+    justify-content: space-around; /* Распределение пространства между элементами */
+}
+
+
+#chat { 
+    position: absolute;
+    top: 80px;
+    bottom: var(--footer-chat-height);
+    width: calc(100% - var(--sidebar-width) - 20px); 
+    right: 0; 
+    overflow-y: auto; 
+    padding: 20px; 
+}
+
+
+#chat .message {
+    background: var(--additional-color); 
+    color: #fff;
+    width: auto;
+    padding: 10px 20px;
+    border-radius: 15px;
+    display: inline;
+    float:left;
+    margin:10px 10px 0;
+    min-width:440px;
+    clear:both;
+}
+
+
+#chat .message.me {
+    display: inline;
+    float: right;
+    background-color: transparent;
+    color: var(--additional-color); /* Цвет фона для сообщений пользователя */
+    border: 2px solid var(--additional-color); /* Установка цвета границы */
+    border-radius: 15px;
+}
+
+
+#chat .date {
+    color: #aaa;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.footer-chat {
+    width: calc(100% - var(--sidebar-width)); /* Ширина равна ширине страницы минус ширина сайдбара */
+    height: var(--footer-chat-height);
+    left: var(--sidebar-width);
+    display:flex;
+    align-items: center;
+    position:absolute;
+    bottom: 0;
+    background-color: #181818eb;
+    border-top: 2px solid var(--additional-color);
+}
+
+
+#chat-input {
+    position: absolute;
+    bottom: 0;
+    background: #333; /* Цвет фона для поля ввода */
+    width: 100%;
+    padding-top: 20px;
+}
+
+.footer-chat input[type="text"] {
+    width: 96%;/* Ширина поля ввода */
+    padding: 10px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+    background-color: transparent;
+    border-color: transparent; /* Устанавливаем цвет границы как прозрачный */
+    color: white;
+}
+
+.footer-chat input[type="text"]:hover,
+.footer-chat input[type="text"]:focus {
+    outline: none;
+}
+
+#chat-message-submit {
+    display: none; /* Скрыть кнопку отправки */
+}
+
+
+#sidebar {
+    width: var(--sidebar-width); /* Ширина боковой панели */
+    background-color: #181818eb; /* Цвет фона боковой панели */
+    position: fixed;
+    top: 80px; /* Выравнивание сверху, учитывая высоту header */
+    bottom: 0; /* Расширяем панель до низа страницы */
+    left: 0;
+    overflow-y: auto; /* Включаем вертикальную прокрутку при необходимости */
+    border-right: 2px solid var(--additional-color); /* Добавляем правую границу для боковой панели */
+    z-index: 1; /* Поднимаем боковую панель над контентом */
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    margin-bottom: 10px;
+    color: white; /* Устанавливаем цвет текста на белый */
+    font-size: 25px;
+    text-decoration: none !important;
+    top: 4px;
+    position: relative;
+}
+
+#sidebar ul li.active {
+    color: white; /* Цвет текста активного элемента также белый */
+}
+
+.chat-sidebar-block {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.chat-sidebar-block:hover,
+.chat-sidebar-block.active {
+    background-color: var(--additional-color);
+}
+
+img.chat-sidebar-photo {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+}

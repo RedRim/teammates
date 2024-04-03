@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/Favicon.ico' %}">
+</head>
+<body>
+    <div id="header">
+        <a href="{% url 'people:home_page' %}" class="site-name">TEAMMATES</a>
+
+
+        {% block header %}
+            {% if user.is_authenticated %}
+                <div class="header-links">
+                    <a href="#" id="logout-link">Выйти</a>                   
+                    <a href="{% url 'people:friends_requests' %}">Заявки в друзья</a>
+                    <a href="{% url 'people:messages' %}">Сообщения</a>
+                    <a href="{% url 'people:find_friends' %}">Найти друзей</a>  
+
+                    <a href="{{ request.user.profile.get_absolute_url }}">
+                        <img src="{{ request.scheme }}://{{ request.get_host }}{{ request.user.profile.photo.url }}" width="60" class="profile-photo">
+                    </a>  
+                    <div class="arrow-block">
+                        <img src="{% static 'img/arrow-down.png' %}" alt="Arrow Down" width="20">
+                    </div>
+                </div>
+            {% else %}
+                <div class="header-links">
+                    <a href="{% url 'login' %}">Войти</a>
+                </div>
+            {% endif %}
+        {% endblock %}
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    {% block include_js %}
+    {% endblock %}
+
+    <script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('logout-link').addEventListener('click', function (event) {
+                event.preventDefault(); // Предотвратить стандартное действие ссылки
+
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{% url "logout" %}';
+
+                var csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = 'csrfmiddlewaretoken';
+                csrfToken.value = '{{ csrf_token }}';
+
+                form.appendChild(csrfToken);
+                document.body.appendChild(form);
+                form.submit();
+            });
+        });
+        const csrftoken = Cookies.get('csrftoken');
+        document.addEventListener('DOMContentLoaded', (event) => {
+            {% block domready %}
+            {% endblock %}
+        })
+    </script>
+</body>
+</html>

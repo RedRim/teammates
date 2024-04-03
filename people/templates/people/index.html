@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}TEAMMATES{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="blog-content">
+            {% for post in posts %}
+                <div class="blog-post">
+                    <div class="post-user-info ">
+                        <a href="{% url 'people:profile' post.user.profile.slug %}">
+                            <img class="post-user-img" src="{{ request.scheme }}://{{ request.get_host }}{{ post.user.profile.photo.url }}" alt="user" />
+                        </a>
+                        <div class="post-text-info ">
+                            <a href="{% url 'people:profile' post.user.profile.slug %}" class="custom">
+                                <h5 class="post-user-username">{{ post.user.username }}</h5>
+                            </a>
+                            <p class="post-date">{{ post.created|date:"d F Y H:i" }}</p>
+                        </div>
+                    </div>
+                    <p>{{post.text}}</p>
+                    {% if post.image %}
+                        <img src="{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}" class="blog-photo">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1>Надо бы войти</h1>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,443 @@
+{% extends 'base.html' %}
+
+{% block title %} Чат с {{friend.username}} {% endblock %}
+
+{% block content %}
+
+
+    <div id="sidebar">
+        <ul>
+            {% for chat in user_chats %}
+                <form action="{% url 'chat:private_chat_room' room_name=chat.slug%}" method="post">
+                    {% csrf_token %}
+                    <a href="{{ chat.get_absolute_url }}">
+                        <div class="chat-sidebar-block{% if chat.user_2.username == friend.username or chat.user_1.username == friend.username %} active{% endif %}">
+                            {% if request.user.pk == chat.user_1.pk %}
+                                <img class="chat-sidebar-photo" src="{{ request.scheme }}://{{ request.get_host }}{{ chat.user_2.profile.photo.url }}" />
+                                <li>{{ chat.user_2.username }}</li>
+                            {% else %}
+                                <img class="chat-sidebar-photo" src="{{ request.scheme }}://{{ request.get_host }}{{ chat.user_1.profile.photo.url }}"/>
+                                <li>{{ chat.user_1.username }}</li>
+                            {% endif %}
+                        </div>
+                    </a>                    
+                </form>            
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div id="chat">
+        {% for message in room.messages.all %}
+            {% if message.user == request.user %}
+                <div class="message me">
+                    <strong>Me</strong>
+                    <span class="date">{{ message.created|date:"H:i" }}</span><br>
+                    {{ message.content }}
+                </div>
+            {% else %}
+                <div class="message other">
+                    <strong>{{ friend.username }}</strong>
+                    <span class="date">{{ message.created|date:"H:i" }}</span><br>
+                    {{ message.content }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    
+
+    <div class="footer-chat">
+        <input id="chat-message-input" type="text" placeholder="Написать сообщение...">
+        <button type="submit" class="primary ghost" id="chat-message-submit">
+            Отправить
+        </button>
+    </div> 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var headerHeight = document.getElementById('header').offsetHeight;
+        var chatElement = document.getElementById('chat');
+        chatElement.style.top = headerHeight + 'px';
+        var chatLog = document.querySelector('#chat');
+        chatLog.scrollTop = chatLog.scrollHeight;
+    });
+
+    var roomName = "{{ room.slug }}";
+    var requestUser = "{{ request.user.username }}"
+
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+
+        chatSocket.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            var message = data['message'];
+            var chatLog = document.querySelector('#chat');
+            var messageElement = document.createElement('div'); 
+            messageElement.className = 'message'; 
+            const datetime = new Date(data.datetime).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); // Отображаем только часы и минуты
+            const isMe = data.user === requestUser;
+            const source = isMe ? 'me' : 'other';
+            const name = isMe ? 'Me' : data.user;
+
+            chat.innerHTML += '<div class="message ' + source + '">' +
+                        '<strong>' + name + '</strong> ' +
+                        '<span class="date">' + datetime + '</span><br>' +
+                        message + '</div>';
+            chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+        };
+
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+    chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var chatLog = document.querySelector('#chat');
+    var messageElement = document.createElement('div'); 
+    messageElement.className = 'message'; 
+    const datetime = data.datetime; // Получаем время из сообщения
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                  '<strong>' + name + '</strong> ' +
+                  '<span class="date">' + datetime + '</span><br>' +
+                  message + '</div>';
+    chatLog.scrollTop = chatLog.scrollHeight; // Прокручиваем чат вниз, чтобы видеть новые сообщения
+};
+
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            var messageInputDom = document.querySelector('#chat-message-input');
+            var message = messageInputDom.value.trim(); // Удаляем пробелы из начала и конца сообщения
+            if (message !== '') {  // Проверяем, что сообщение не пустое
+                document.querySelector('#chat-message-submit').click();
+        }
+    }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        var messageInputDom = document.querySelector('#chat-message-input');
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        messageInputDom.value = '';
+    };
+</script>
+
+{% endblock %}

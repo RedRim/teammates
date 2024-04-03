@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="profile-head-container">
+        <div class="profile-container">
+            <img class="round" src="{{ request.scheme }}://{{ request.get_host }}{{ user.profile.photo.url }}" width="120" alt="user" />
+            <div class="user-info">
+                <h3>{{ user.username }}, {{user.profile.age}}</h3>
+                <h5>{{ user.first_name }} {{ user.last_name }}</h5>
+                <h6>{{user.profile.city}}, {{user.profile.country}}</h6>
+            </div>
+            {% if user != request.user %}
+                <div class="buttoms-profile-block">
+
+                    <form action="{% url 'chat:private_chat_room' room_name=room.slug %}" method="post">
+                        {% csrf_token %}
+                        <button class="primary">
+                            Написать
+                        </button>
+                    </form>
+
+                    {% if friend_button == 'Processing' %}
+                        <form id="add-friend-form" action="{% url 'people:cancel_adding_friend' user.pk %}" method="post">
+                            {% csrf_token %}
+                            <button class="primary ghost">
+                                Заявка отправлена
+                            </button>
+                        </form>
+                    {% elif friend_button == 'Among_friends' %}
+                        <button class="primary ghost">
+                            В друзьях
+                        </button>
+                    {% else %}
+                        <form id="add-friend-form" action="{% url 'people:add_friend' user.pk %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="primary ghost">
+                                Добавить в друзья
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        
+        {% if user != request.user %}
+                <div class="other-user-right-container">
+                    {% if games %}
+                        <div class="user-profile-game-list">
+                            <h5 class="user-profile-game-list-title">Игры, в которые играет {{ user }}:</h5>
+                            <div class="media-scroller snaps-inline">
+                                {% for game in games %}
+                                    <div class="media-element">
+                                        <img src="{{ request.scheme }}://{{ request.get_host }}{{ game.image.url }}" class="round-game-img">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="block-button-friends">
+                        <form action="{% url 'people:user_friends' user.pk %}">
+                            <button class="primary">
+                                Друзья {{ user }}
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="rating-container">
+                        <h5 class="rate-title">Поставьте оценку для {{ user }}</h5>
+                        <div class="rate">
+                            <input type="radio" id="star1" name="rate" value="5" />
+                            <label for="star1">1 star</label>
+                            <input type="radio" id="star2" name="rate" value="4" />
+                            <label for="star2">2 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3">3 stars</label>
+                            <input type="radio" id="star4" name="rate" value="2" />
+                            <label for="star4">4 stars</label>
+                            <input type="radio" id="star5" name="rate" value="1" />
+                            <label for="star5">5 stars</label>
+                        </div>
+                    </div>
+                </div>
+
+                
+        {% else %}
+            <div class="profile-buttons-container">
+                <button class="group">
+                    <a href="{% url 'people:add_post' %}">Написать пост</a>
+                </button>
+                <button class="group ghost">
+                    <a href="{% url 'profile_update' %}">Изменить профиль</a>
+                </button>
+                <button class="group ghost">
+                    <a href="{% url 'people:games' %}">Изменить список игр</a>
+                </button>
+                <button class="group down">
+                    <a href="{% url 'people:user_friends' user.pk %}">Друзья</a>
+                </button>
+            </div>
+        {% endif %}
+    </div> 
+    
+    <div class="blog-content">
+        {% for post in posts %}
+            <div class="blog-post">
+                <div class="post-user-info ">
+                    <a href="{% url 'people:profile' user.profile.slug %}" class="custom">
+                        <img class="post-user-img" src="{{ request.scheme }}://{{ request.get_host }}{{ post.user.profile.photo.url }}" alt="user" />
+                    </a>
+                    <div class="post-text-info">
+                        <a href="{% url 'people:profile' post.user.profile.slug %}" class="custom">
+                            <h5 class="post-user-username">{{ post.user.username }}</h5>
+                        </a>
+                        <p class="post-date">{{ post.created|date:"d F Y H:i" }}</p>
+                    </div>
+                </div>
+                <p>{{post.text}}</p>
+                {% if post.image %}
+                    <img src="{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}" class="blog-photo">
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function sendRating() {
+            var ratingValue = document.querySelector('input[name="rate"]:checked').value;
+            var userId = '{{ user.id }}';
+            var ratingValue = document.querySelector('input[name="rate"]:checked').value;
+    
+            fetch('/set_rating/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ rating: ratingValue,
+                                       user_id: userId })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Рейтинг успешно отправлен на сервер');
+                    // Дополнительная обработка успешной отправки рейтинга
+                } else {
+                    console.error('Ошибка при отправке рейтинга на сервер');
+                    // Обработка ошибки при отправке рейтинга
+                }
+            })
+            .catch(error => {
+                console.error('Произошла ошибка при отправке запроса:', error);
+                // Обработка ошибки при выполнении запроса
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.rate input[type="radio"]');
+            
+            stars.forEach(function(star) {
+                star.addEventListener('click', function() {
+                    sendRating(); // Вызываем функцию отправки рейтинга при клике на звезду
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

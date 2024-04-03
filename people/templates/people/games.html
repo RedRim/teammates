@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Добавить игру{% endblock %}
+
+
+{% block content %}
+
+    <div class="game-card-container">
+        {% for game in object_list %}
+        <div class="game-card" >
+            {% if game in user.games.all %}
+                    <img src="{{ request.scheme }}://{{ request.get_host }}{{ game.image.url }}" 
+                    onclick="toggleSelected(this)" data-game-name="{{ game.slug }}" class="selected">
+            {% else %}
+                    <img src="{{ request.scheme }}://{{ request.get_host }}{{ game.image.url }}"
+                    onclick="toggleSelected(this)" data-game-name="{{ game.slug }}">
+            {% endif %}
+                <h1>{{ game.title }}</h1>
+        </div>
+        {% endfor %}
+        <button onclick="sendSelectedGames()" class="primary">Добавить выбранные игры</button>
+    </div>
+
+
+
+   <script>
+        function toggleSelected(element) {
+            element.classList.toggle('selected');
+        }
+
+        function sendSelectedGames() {
+            var selectedGames = document.querySelectorAll('.selected');
+            var gameNames = [];
+
+            selectedGames.forEach(function(game) {
+                gameNames.push(game.dataset.gameName);
+            });
+
+            return fetch('/chosen_games/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ games: gameNames })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Данные о выбранных играх успешно отправлены на сервер');
+                    var profileUrl = "{% url 'people:profile' request.user.profile.slug %}";
+                    window.location.href = profileUrl;
+                    // Дополнительная обработка успешной отправки данных на сервер
+                } else {
+                    console.error('Ошибка при отправке данных о выбранных играх на сервер');
+                    throw new Error('Ошибка при отправке данных о выбранных играх на сервер');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при отправке запроса:', error);
+                throw error;
+            });
+        }
+    </script>
+{% endblock %}

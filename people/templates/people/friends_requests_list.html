@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Заявки в друзья{% endblock %}
+
+
+{% block content %}
+    {% for user_request in people_requests %}
+    <div class="profile-container list" data-request-id="{{ user_request.user_from.pk }}">
+        <a href="{% url 'people:profile' user_request.user_from.profile.slug %}">
+            <img class="round" src="{{ request.scheme }}://{{ request.get_host }}{{ user_request.user_from.profile.photo.url }}" width="120" alt="user" />
+        </a>
+        <div class="user-info">
+            <h3>{{ user_request.user_from.username }}, {{user.profile.age}}</h3>    
+            <div class="rate">
+                <input type="radio" id="star1" name="rate" value="1" />
+                <label for="star1">1 star</label>
+                <input type="radio" id="star2" name="rate" value="2" />
+                <label for="star2">2 stars</label>
+                <input type="radio" id="star3" name="rate" value="3" />
+                <label for="star3">3 stars</label>
+                <input type="radio" id="star4" name="rate" value="4" />
+                <label for="star4">4 stars</label>
+                <input type="radio" id="star5" name="rate" value="5" />
+                <label for="star5">5 stars</label>
+            </div>
+        </div>
+    
+        <button class="primary" type="button" data-action="accept" data-user_from_id="{{ user_request.user_from.pk }}">Принять</button>
+        <button class="primary ghost" type="button" data-action="reject" data-user_from_id="{{ user_request.user_from.pk }}">Отклонить</button>
+        <button class="primary" type="button" style="display: none;" disabled>Принято</button>
+        <p class="response-text-accept" id="response-text-{{ user_request.user_from.pk }}" style="display: none;">Принято</p>
+        <p class="response-text-reject" id="response-text-{{ user_request.user_from.pk }}" style="display: none;">Отклонено</p>
+    </div>
+    
+    {% endfor %}
+{% endblock %}
+
+{% block domready %}
+const url = '{% url "people:action_request" %}';
+const csrftoken = '{{ csrf_token }}';
+
+const handleFriendRequest = (action, user_from_id, acceptButton, rejectButton, responseTextAccept, responseTextReject) => {
+  var formData = new FormData();
+  formData.append('action', action);
+  formData.append('user_from_id', user_from_id);
+
+  var options = {
+      method: 'POST',
+      headers: {'X-CSRFToken': csrftoken},
+      body: formData,
+      mode: 'same-origin'
+  };
+
+  return fetch(url, options)
+      .then(response => response.json())
+      .then(data => {
+          if (data['status'] === 'ok') {
+              console.log('Запрос успешно выполнен');
+              // Изменяем текст кнопки на "Добавлен" или "Отклонено"
+              if (action === 'accept') {
+                acceptButton.style.display = 'none'; // Скрываем кнопку Принять
+                rejectButton.style.display = 'none'; // Скрываем кнопку Отклонить
+                responseTextAccept.style.display = 'block'; // Показываем текст Принято
+              } else if (action === 'reject') {
+                acceptButton.style.display = 'none'; // Скрываем кнопку Принять
+                rejectButton.style.display = 'none'; // Скрываем кнопку Отклонить
+                responseTextReject.style.display = 'block'; // Показываем текст Отклонено
+              }              
+          } else {
+              console.error('Произошла ошибка при выполнении запроса');
+              // Добавьте здесь код для отображения сообщения об ошибке или повторной отправки запроса
+          }
+      })
+      .catch(error => {
+          console.error('Произошла ошибка', error);
+      });
+};
+
+document.querySelectorAll('.profile-container.list').forEach(container => {
+    const acceptButton = container.querySelector('button[data-action="accept"]');
+    const rejectButton = container.querySelector('button[data-action="reject"]');
+    const responseTextAccept = container.querySelector('.response-text-accept');
+    const responseTextReject = container.querySelector('.response-text-reject');
+
+    acceptButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        const action = this.getAttribute('data-action');
+        const user_from_id = this.getAttribute('data-user_from_id');
+
+        handleFriendRequest(action, user_from_id, acceptButton, rejectButton, responseTextAccept, responseTextReject);
+    });
+
+    rejectButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        const action = this.getAttribute('data-action');
+        const user_from_id = this.getAttribute('data-user_from_id');
+
+        handleFriendRequest(action, user_from_id, acceptButton, rejectButton, responseTextAccept, responseTextReject);
+    });
+});
+{% endblock %}

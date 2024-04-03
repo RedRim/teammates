@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Поиск друзей{% endblock %}
+
+{% block content %}
+        <div class="users-cards-container">
+            {% for user in friends %}
+                <div class="profile-container list">
+                    <a href="{{ user.profile.get_absolute_url }}">
+                        <img class="round" src="{{ request.scheme }}://{{ request.get_host }}{{ user.profile.photo.url }}" width="120" alt="user" />
+                    </a>
+                    <div class="user-info">
+                        <h3>{{ user.username }}, {{user.profile.age}}</h3>    
+                        <div class="rate">
+                            <input type="radio" id="star1" name="rate" value="1" />
+                            <label for="star1">1 star</label>
+                            <input type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2">2 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3">3 stars</label>
+                            <input type="radio" id="star4" name="rate" value="4" />
+                            <label for="star4">4 stars</label>
+                            <input type="radio" id="star5" name="rate" value="5" />
+                            <label for="star5">5 stars</label>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                {% if user.pk != request.user.pk %}
+                    <p>Станьте первым другом для {{ user }}</p>
+                {% else %}
+                    <p>
+                        Можете найти новых друзей <a href="people:find_friends">тут</a>
+                    </p>
+                {% endif %}
+            {% endfor %}
+        </div>
+{% endblock %}

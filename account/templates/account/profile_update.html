@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Изменение профиля{% endblock %}
+
+{% block content %}
+    <div id="form-block">
+        <h1 class="form-header">Изменение профиля</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Логин" value="{{ username }}" required>
+            <input type="text" name="first_name" placeholder="Имя" value="{{ first_name }}">
+            <input type="text" name="last_name" placeholder="Фамилия" value="{{ last_name }}">
+            <input type="text" name="email" placeholder="Email" value="{{ email }}" required>
+        
+            <input type="text" name="country" placeholder="Страна" value="{{ country|default_if_none:'' }}">
+            <input type="text" name="city" placeholder="Город" value="{{ city|default_if_none:'' }}">            
+            <input type="date" name="date_birth" placeholder="Дата рождения" value="{{ date_birth|date:'Y-m-d' }}">
+            <input type="file" name="photo" placeholder="Фото" value="{{ photo }}">
+            <button type="submit" class="primary">Подтвердить изменение профиля</button>
+        </form>        
+    </div>
+{% endblock %}
