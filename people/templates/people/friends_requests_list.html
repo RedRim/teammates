@@ -6,32 +6,34 @@
 
 {% block content %}
     {% for user_request in people_requests %}
-    <div class="profile-container list" data-request-id="{{ user_request.user_from.pk }}">
-        <a href="{% url 'people:profile' user_request.user_from.profile.slug %}">
-            <img class="round" src="{{ request.scheme }}://{{ request.get_host }}{{ user_request.user_from.profile.photo.url }}" width="120" alt="user" />
-        </a>
-        <div class="user-info">
-            <h3>{{ user_request.user_from.username }}, {{user.profile.age}}</h3>    
-            <div class="rate">
-                <input type="radio" id="star1" name="rate" value="1" />
-                <label for="star1">1 star</label>
-                <input type="radio" id="star2" name="rate" value="2" />
-                <label for="star2">2 stars</label>
-                <input type="radio" id="star3" name="rate" value="3" />
-                <label for="star3">3 stars</label>
-                <input type="radio" id="star4" name="rate" value="4" />
-                <label for="star4">4 stars</label>
-                <input type="radio" id="star5" name="rate" value="5" />
-                <label for="star5">5 stars</label>
+    <div class="users-cards-container">
+        <div class="profile-container list" data-request-id="{{ user_request.user_from.pk }}">
+            <a href="{% url 'people:profile' user_request.user_from.profile.slug %}">
+                <img class="round" src="{{ request.scheme }}://{{ request.get_host }}{{ user_request.user_from.profile.photo.url }}" width="120" alt="user" />
+            </a>
+            <div class="user-info">
+                <h3>{{ user_request.user_from.username }}, {{user.profile.age}}</h3>    
+                <div class="rate">
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1">1 star</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2">2 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3">3 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4">4 stars</label>
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5">5 stars</label>
+                </div>
             </div>
+        
+            <button class="primary" type="button" data-action="accept" data-user_from_id="{{ user_request.user_from.pk }}">Принять</button>
+            <button class="primary ghost" type="button" data-action="reject" data-user_from_id="{{ user_request.user_from.pk }}">Отклонить</button>
+            <button class="primary" type="button" style="display: none;" disabled>Принято</button>
+            <p class="response-text-accept" id="response-text-{{ user_request.user_from.pk }}" style="display: none;">Принято</p>
+            <p class="response-text-reject" id="response-text-{{ user_request.user_from.pk }}" style="display: none;">Отклонено</p>
         </div>
-    
-        <button class="primary" type="button" data-action="accept" data-user_from_id="{{ user_request.user_from.pk }}">Принять</button>
-        <button class="primary ghost" type="button" data-action="reject" data-user_from_id="{{ user_request.user_from.pk }}">Отклонить</button>
-        <button class="primary" type="button" style="display: none;" disabled>Принято</button>
-        <p class="response-text-accept" id="response-text-{{ user_request.user_from.pk }}" style="display: none;">Принято</p>
-        <p class="response-text-reject" id="response-text-{{ user_request.user_from.pk }}" style="display: none;">Отклонено</p>
-    </div>
+    </div> 
     
     {% endfor %}
 {% endblock %}

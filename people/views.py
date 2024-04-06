@@ -278,7 +278,3 @@ def set_rating(request):
     else:
         return JsonResponse({'error': 'Неправильный метод запроса'}, status=400)
     
-
-
-def messages(request):
-    return HttpResponse('Мессенджер')

@@ -6,9 +6,9 @@ from decouple import config
 
 urlpatterns = [
     path(str(config('ADMIN_URL')), admin.site.urls),
+    path('', include('chat.urls')),
     path('', include('account.urls')),
     path('', include('people.urls')),
-    path('', include('chat.urls')),
 ]
 
 if settings.DEBUG:

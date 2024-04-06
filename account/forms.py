@@ -13,21 +13,6 @@ class CustomSetPasswordForm(SetPasswordForm):
         "password_mismatch": _("Пароли не совпадают"),
     }
 
-    # def clean_username(self):
-    #     username = slugify(self.cleaned_data['username'])  
-    #     print('====================================')
-    #     print('====================================')
-    #     print('====================================')
-    #     print('====================================')
-    #     print(username)
-    #     if Profile.objects.filter(slug=username).exists():
-    #         print('====================================')
-    #         print('====================================')
-    #         print('====================================')
-    #         print('====================================')
-    #         raise forms.ValidationError('Пользователь с таким логином уже существует))')
-    #     return username
-
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password1'] != cd['password2']:

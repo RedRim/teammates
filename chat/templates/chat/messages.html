@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} Сообщения {% endblock %}
+
+{% block content %}
+
+
+    <div id="sidebar">
+        <ul>
+            {% for chat in user_chats %}
+                <form action="{% url 'chat:private_chat_room' room_name=chat.slug%}" method="post">
+                    {% csrf_token %}
+                    <a href="{{ chat.get_absolute_url }}">
+                        <div class="chat-sidebar-block{% if chat.user_2.username == friend.username or chat.user_1.username == friend.username %} active{% endif %}">
+                            {% if request.user.pk == chat.user_1.pk %}
+                                <img class="chat-sidebar-photo" src="{{ request.scheme }}://{{ request.get_host }}{{ chat.user_2.profile.photo.url }}" />
+                                <li>{{ chat.user_2.username }}</li>
+                            {% else %}
+                                <img class="chat-sidebar-photo" src="{{ request.scheme }}://{{ request.get_host }}{{ chat.user_1.profile.photo.url }}"/>
+                                <li>{{ chat.user_1.username }}</li>
+                            {% endif %}
+                        </div>
+                    </a>                    
+                </form>            
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div id="chat">
+        <h1>Выберите, кому хотели бы написать</h1>
+    </div> 
+
+{% endblock %}

@@ -19,7 +19,7 @@
                 <div class="header-links">
                     <a href="#" id="logout-link">Выйти</a>                   
                     <a href="{% url 'people:friends_requests' %}">Заявки в друзья</a>
-                    <a href="{% url 'people:messages' %}">Сообщения</a>
+                    <a href="{% url 'chat:messages' %}">Сообщения</a>
                     <a href="{% url 'people:find_friends' %}">Найти друзей</a>  
 
                     <a href="{{ request.user.profile.get_absolute_url }}">

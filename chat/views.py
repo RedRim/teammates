@@ -17,7 +17,6 @@ def private_chat_room(request, room_name):
         friend_username = usernames[1]
     else:
         friend_username = usernames[0]
-    print(f'====={friend_username}=====')
     friend_profile = Profile.objects.get(slug=friend_username)
         
     friend = friend_profile.user
@@ -32,3 +31,10 @@ def private_chat_room(request, room_name):
                'user_chats': other_rooms,
                'messages': messages}
     return render(request, 'chat/private_room.html', context=context)
+
+
+@login_required
+def messages(request):
+    other_rooms = Room.objects.filter(Q(user_1 = request.user) | Q(user_2=request.user)).filter(is_active=True)
+    context = {'user_chats': other_rooms,}
+    return render(request, 'chat/messages.html', context=context)

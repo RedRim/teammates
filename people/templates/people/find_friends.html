@@ -26,11 +26,16 @@
                     <div class="user-info">
                         <h3>{{ user.username }}, {{user.profile.age}}</h3>
                         <div class="rate">
-                            {% with ''|center:user.profile.get_rounded_rating as range %}
-                                {% for _ in range %}
-                                    <label for="star{{ forloop.counter }}-{{ user.pk }}">★</label>
-                                {% endfor %}
-                            {% endwith %}
+                            <input type="radio" id="star1" name="rate" value="5" />
+                            <label for="star1">1 star</label>
+                            <input type="radio" id="star2" name="rate" value="4" />
+                            <label for="star2">2 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3">3 stars</label>
+                            <input type="radio" id="star4" name="rate" value="2" />
+                            <label for="star4">4 stars</label>
+                            <input type="radio" id="star5" name="rate" value="1" />
+                            <label for="star5">5 stars</label>
                         </div>
                     </div>
                 </div>
@@ -48,11 +53,16 @@
                     <div class="user-info">
                         <h3>{{ user.username }}, {{user.profile.age}}</h3>
                         <div class="rate">
-                            {% with ''|center:user.profile.get_rounded_rating as range %}
-                                {% for _ in range %}
-                                    <label for="star{{ forloop.counter }}-{{ user.pk }}">★</label>
-                                {% endfor %}
-                            {% endwith %}
+                            <input type="radio" id="star1" name="rate" value="5" />
+                            <label for="star1">1 star</label>
+                            <input type="radio" id="star2" name="rate" value="4" />
+                            <label for="star2">2 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3">3 stars</label>
+                            <input type="radio" id="star4" name="rate" value="2" />
+                            <label for="star4">4 stars</label>
+                            <input type="radio" id="star5" name="rate" value="1" />
+                            <label for="star5">5 stars</label>
                         </div>
                     </div>
                 </div>

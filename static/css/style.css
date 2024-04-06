@@ -18,12 +18,10 @@ f1285a
 :root {
     --sidebar-width: 300px; /* Ширина сайдбара */
     --footer-chat-height: 60px;
-    --additional-color: rgb(0, 65, 194);
+    --header-heigth: 50px;
+    --additional-color: #ae043d;
 }
-/* 008000 */
-/* ae043d */
-/* ff0037 */
-/* var(--additional-color) */
+
 
 body {
     background-color: #141414;
@@ -85,7 +83,7 @@ button {
     text-align: center;
     border-bottom: 4px solid var(--additional-color);
     overflow: hidden; /* Используем overflow для предотвращения выхода за границы */
-    height: 60px;
+    height: var(--header-heigth);
 }
 
 #header a {
@@ -94,14 +92,12 @@ button {
     /* margin: 0 10px; */
     text-decoration: none;
     display: inline-block;
-    
 }
 
 .header-links {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-top: 7px;
     margin-right: 40px;
 }
 
@@ -768,7 +764,7 @@ textarea::-webkit-scrollbar-thumb {
 
 #chat { 
     position: absolute;
-    top: 80px;
+    top: var(--header-heigth);
     bottom: var(--footer-chat-height);
     width: calc(100% - var(--sidebar-width) - 20px); 
     right: 0; 
@@ -805,6 +801,13 @@ textarea::-webkit-scrollbar-thumb {
     color: #aaa;
     font-style: italic;
     font-size: 12px;
+}
+
+#chat h1 {
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 450px;
 }
 
 .footer-chat {
@@ -851,7 +854,7 @@ textarea::-webkit-scrollbar-thumb {
     width: var(--sidebar-width); /* Ширина боковой панели */
     background-color: #181818eb; /* Цвет фона боковой панели */
     position: fixed;
-    top: 80px; /* Выравнивание сверху, учитывая высоту header */
+    top: 74px; /* Выравнивание сверху, учитывая высоту header */
     bottom: 0; /* Расширяем панель до низа страницы */
     left: 0;
     overflow-y: auto; /* Включаем вертикальную прокрутку при необходимости */

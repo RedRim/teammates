@@ -6,7 +6,6 @@ app_name = 'people'
 
 urlpatterns = [
     path('', views.HomePageView.as_view(), name='home_page'),
-    path('messages/', views.messages, name='messages'),
     path('add_post/', views.add_post, name='add_post'),
 
     path('add_friend/<int:user_to_id>/', views.add_friend, name='add_friend'),
@@ -23,4 +22,3 @@ urlpatterns = [
     path('friends/<int:user_id>', views.UserFriends.as_view(), name='user_friends'),
 
 ]
-# path('add_post/', views.AddPostView.as_view(), name='add_post'),
