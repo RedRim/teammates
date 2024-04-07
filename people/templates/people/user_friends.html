@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Поиск друзей{% endblock %}
+{% block title %}Друзья {{user.usename}} {% endblock %}
 
 {% block content %}
         <div class="users-cards-container">
@@ -31,7 +31,7 @@
                     <p>Станьте первым другом для {{ user }}</p>
                 {% else %}
                     <p>
-                        Можете найти новых друзей <a href="people:find_friends">тут</a>
+                        Можете найти новых друзей <a href="{% url 'people:find_friends' %}">тут</a>
                     </p>
                 {% endif %}
             {% endfor %}

@@ -59,20 +59,6 @@ class UserFriends(ListView):
         context['user'] = self.user
         context['friends'] = friends
         return context
-    
-
-# class UserFriends(View):
-#     template_name = 'people/user_friends.html'
-
-#     def get(self, request, *args, **kwargs):
-#         user_id = self.kwargs.get('user_id')
-#         user = User.objects.get(pk=user_id)
-#         friends = user.friends.all()
-#         context = {
-#             'user': user,
-#             'friends': friends,
-#         }
-#         return render(request, self.template_name, context)
 
 
 class ProfileView(DetailView, LoginRequiredMixin):
