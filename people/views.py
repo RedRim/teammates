@@ -48,13 +48,11 @@ class UserFriends(ListView):
 
     def get_queryset(self):
         user_id = self.kwargs.get('user_id')
-        user = User.objects.get(pk=user_id)
-        return user.friends.all()
+        self.user = User.objects.get(pk=user_id)
+        return self.user.friends.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user_id = self.kwargs.get('user_id')
-        self.user = User.objects.get(pk=user_id)
         friends = self.user.friends.all()
         context['user'] = self.user
         context['friends'] = friends
